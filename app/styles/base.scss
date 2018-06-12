@@ -1,0 +1,71 @@
+body {
+	margin: 0 auto;
+	width: 90%;
+	max-width: 1240px;
+  background-color: $backgroundMainColour;
+	font-family: 'Roboto', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes fadein {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+@keyframes fadeout {
+  from {opacity:1;}
+  to {opacity:0;}
+}
+
+h1 {
+  padding: 20px;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h1, h2 {
+  font-weight: 300;
+}
+
+ul {
+  margin: 30px;
+  border: 1px solid green;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+li {
+  list-style: none;
+  border: 1px solid red;
+  margin: 10px;
+  width: 33%;
+  height: 200px;
+}
+
+
+
+
+
+@media (min-width: 620px) {
+  h2 {
+    font-size: 3rem;
+  }
+
+  .search input {
+    width: 50%;
+  }
+
+  .btn-add {
+    width: 75px;
+    height: 75px;
+    font-size: 3rem;
+  }
+}
