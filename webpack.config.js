@@ -76,7 +76,7 @@ const productionConfig = merge([
 const developmentConfig = merge([
   parts.devServer({
     host: process.env.HOST,
-    port: 8000,
+    port: 8080,
     poll: process.env.ENABLE_POLLING
   }),
   parts.loadSCSS({include: PATHS.style}),
