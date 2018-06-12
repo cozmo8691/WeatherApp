@@ -1,8 +1,8 @@
-import * as Types from '../actions/actionTypes';
-import * as Modes from '../config/modes';
+import * as Types from "../actions/actionTypes";
+import * as Modes from "../config/modes";
 
-import store from '../store';
-import API from '../API/API';
+import store from "../store";
+import API from "../API/API";
 
 export function initFetchItems(url) {
   return dispatch => {
@@ -26,9 +26,24 @@ function fetchItems(url) {
 
 function fetchItemsSuccess(json) {
   return dispatch => {
-    dispatch(loadItems(json));
+    dispatch(loadItems(groupByDay(json.list)));
     dispatch(updateFetchItemsStatus(Modes.DONE_SUCCESS));
   };
+}
+
+function groupByDay(list) {
+  return list
+    .map(item =>
+      Object.assign({}, item, { dateKey: item.dt_txt.split(" ")[0] })
+    )
+    .reduce((acc, curr) => {
+      if (!acc[curr.dateKey]) {
+        return Object.assign({}, acc, { [curr.dateKey]: [curr] });
+      }
+      return Object.assign({}, acc, {
+        [curr.dateKey]: [...acc[curr.dateKey], curr]
+      });
+    }, {});
 }
 
 function updateFetchItemsStatus(nextStatus) {

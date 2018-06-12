@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import settings from '../config/settings';
-import {initFetchItems} from '../actions/actions';
-
+import settings from "../config/settings";
+import { initFetchItems } from "../actions/actions";
 
 export class MainContainer extends Component {
   constructor(props) {
@@ -15,21 +14,22 @@ export class MainContainer extends Component {
     };
   }
 
-
   componentDidMount() {
     this.props.initFetchItems(settings.itemsURL);
   }
 
-
   render() {
+    const { items } = this.props;
 
-    console.log(this.props.items);
+    console.log(items);
 
-    return <div>
-      <section>
-        successs
-      </section>
-    </div>;
+    return (
+      <div>
+        <section>
+          {Object.keys(items).map(item => <div key={item}>{item}</div>)}
+        </section>
+      </div>
+    );
   }
 }
 
