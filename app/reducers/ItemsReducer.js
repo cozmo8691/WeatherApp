@@ -3,14 +3,14 @@ import * as Modes from "../config/modes";
 
 const initialState = {
   items: {},
-  fetchItemsStatus: Modes.IDLE
+  requestStatus: Modes.IDLE
 };
 
 const ItemsReducer = function(state = initialState, action) {
   switch (action.type) {
-    case Types.UPDATE_FETCH_ITEMS_STATUS:
+    case Types.UPDATE_REQUEST_STATUS:
       return Object.assign({}, state, {
-        fetchItemsStatus: action.nextStatus
+        requestStatus: action.nextStatus
       });
 
     case Types.LOAD_ITEMS:

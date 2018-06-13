@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import moment from "moment";
 
+import * as Modes from "../config/modes";
 import settings from "../config/settings";
 import { initFetchItems } from "../actions/actions";
+import Forecast from "./Forecast";
 
 export class MainContainer extends Component {
   constructor(props) {
@@ -22,57 +25,45 @@ export class MainContainer extends Component {
     this.setState({ selectedDay });
   };
 
-  _mapToColourRange = val => {
-    const colourIndex = Math.round((val - -20) / (40 - -20) * 5);
-    return ["darkblue", "lightblue", "lightgreen", "yellow", "orange", "red"][
-      colourIndex
-    ];
-  };
-
   render() {
-    const { items } = this.props;
+    const { items, requestStatus } = this.props;
     const selectedDay = this.state.selectedDay || Object.keys(items)[0];
 
     return (
       <div className="wrapper">
-        <header>
+        <header role="banner">
           <h1>Edinburgh - 5 day Forecast</h1>
           <nav>
-            {Object.keys(items).map(item => (
-              <div
-                key={item}
-                className={`day-tab${selectedDay === item ? " selected" : ""}`}
-                onClick={this._updateSelectedDay.bind(null, item)}
-              >
-                {item}
-              </div>
-            ))}
-          </nav>
-        </header>
-        <main>
-          {items[selectedDay] &&
-            items[selectedDay].map(forecast => {
-              const time = forecast.dt_txt.split(" ")[1];
-              const desc = forecast.weather[0].main;
-              const iconURL = `${settings.iconsURL}${
-                forecast.weather[0].icon
-              }.png`;
-              const temp = Math.round(forecast.main.temp);
+            {Object.keys(items).map((item, i) => {
+              const date = moment.unix(items[item][0].dt);
+              const formattedDate = moment(date).format("DD/MM/YYYY");
+              const dayName = moment(date).format("dddd");
+
               return (
-                <div key={forecast.dt} className="forecast">
-                  <p>{time}</p>
-                  <p>{desc}</p>
-                  <img src={iconURL} alt={desc} />
-                  <p
-                    className="temperature"
-                    style={{ background: this._mapToColourRange(temp) }}
-                  >
-                    {temp}
-                  </p>
-                  <p />
+                <div
+                  key={item}
+                  className={`day-tab${
+                    selectedDay === item ? " selected" : ""
+                  }`}
+                  onClick={this._updateSelectedDay.bind(null, item)}
+                >
+                  {i === 0 ? (
+                    "Today"
+                  ) : (
+                    <React.Fragment>
+                      <div className="day-name">{dayName}</div>
+                      <div className="day-date">{formattedDate}</div>
+                    </React.Fragment>
+                  )}
                 </div>
               );
             })}
+          </nav>
+        </header>
+        <main>
+          {Modes.MODES_OUTPUT_MESSAGE[requestStatus] || (
+            <Forecast dayForecast={items[selectedDay]} />
+          )}
         </main>
       </div>
     );
@@ -81,12 +72,14 @@ export class MainContainer extends Component {
 
 MainContainer.propTypes = {
   initFetchItems: PropTypes.func.isRequired,
-  items: PropTypes.any.isRequired
+  items: PropTypes.any.isRequired,
+  requestStatus: PropTypes.string
 };
 
 const mapStateToProps = store => {
   return {
-    items: store.itemsState.items
+    items: store.itemsState.items,
+    requestStatus: store.itemsState.requestStatus
   };
 };
 
