@@ -10,7 +10,7 @@ export class MainContainer extends Component {
     super(props);
 
     this.state = {
-      count: 0
+      selectedDay: null
     };
   }
 
@@ -18,16 +18,62 @@ export class MainContainer extends Component {
     this.props.initFetchItems(settings.itemsURL);
   }
 
+  _updateSelectedDay = selectedDay => {
+    this.setState({ selectedDay });
+  };
+
+  _mapToColourRange = val => {
+    const colourIndex = Math.round((val - -20) / (40 - -20) * 5);
+    return ["darkblue", "lightblue", "lightgreen", "yellow", "orange", "red"][
+      colourIndex
+    ];
+  };
+
   render() {
     const { items } = this.props;
-
-    console.log(items);
+    const selectedDay = this.state.selectedDay || Object.keys(items)[0];
 
     return (
-      <div>
-        <section>
-          {Object.keys(items).map(item => <div key={item}>{item}</div>)}
-        </section>
+      <div className="wrapper">
+        <header>
+          <h1>Edinburgh - 5 day Forecast</h1>
+          <nav>
+            {Object.keys(items).map(item => (
+              <div
+                key={item}
+                className={`day-tab${selectedDay === item ? " selected" : ""}`}
+                onClick={this._updateSelectedDay.bind(null, item)}
+              >
+                {item}
+              </div>
+            ))}
+          </nav>
+        </header>
+        <main>
+          {items[selectedDay] &&
+            items[selectedDay].map(forecast => {
+              const time = forecast.dt_txt.split(" ")[1];
+              const desc = forecast.weather[0].main;
+              const iconURL = `${settings.iconsURL}${
+                forecast.weather[0].icon
+              }.png`;
+              const temp = Math.round(forecast.main.temp);
+              return (
+                <div key={forecast.dt} className="forecast">
+                  <p>{time}</p>
+                  <p>{desc}</p>
+                  <img src={iconURL} alt={desc} />
+                  <p
+                    className="temperature"
+                    style={{ background: this._mapToColourRange(temp) }}
+                  >
+                    {temp}
+                  </p>
+                  <p />
+                </div>
+              );
+            })}
+        </main>
       </div>
     );
   }

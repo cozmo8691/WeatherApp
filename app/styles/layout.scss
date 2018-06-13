@@ -1,0 +1,52 @@
+div.app,
+div.wrapper {
+  margin: 10px auto;
+
+  header nav {
+    display: flex;
+
+    .day-tab {
+      border: 1px solid $borderColour;
+      //border-bottom: 2px solid #ccc;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      flex: 1 1 auto;
+      height: 100px;
+      cursor: pointer;
+      background-color: #ccc;
+    }
+
+    .day-tab:not(.selected):hover {
+      background-color: #eee;
+    }
+
+    .selected {
+      background-color: $selectedBGColour;
+      border-bottom: 2px solid white;
+    }
+  }
+
+  main {
+    display: flex;
+    .forecast {
+      flex: 1 1 auto;
+      border: 1px solid $borderColour;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: $mainBGColour;
+
+      p {
+        margin-top: 20px;
+      }
+
+      .temperature {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+      }
+    }
+  }
+}

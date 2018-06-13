@@ -1,5 +1,3 @@
-import uuid from "js-uuid";
-
 import * as Types from "../actions/actionTypes";
 import * as Modes from "../config/modes";
 

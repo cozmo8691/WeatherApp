@@ -4,7 +4,8 @@
   "description": "BuildIt test",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --env.target development --inline --watch --hot",
+    "start":
+      "webpack-dev-server --env.target development --inline --watch --hot",
     "build": "webpack --env.target production",
     "lint:js": "eslint app/ webpack.*.js --cache",
     "stats": "webpack --env.target production --profile --json > stats.json",
@@ -18,9 +19,8 @@
   "author": "Jeff Penketh",
   "license": "MIT",
   "jest": {
-    "setupFiles": [
-      "raf/polyfill"
-    ]
+    "setupFiles": ["raf/polyfill"],
+    "testMatch": ["**/__tests__/*-test.js?(x)"]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
