@@ -20,6 +20,9 @@
   "jest": {
     "setupFiles": [
       "raf/polyfill"
+    ],
+    "testMatch": [
+      "**/__tests__/*-test.js?(x)"
     ]
   },
   "devDependencies": {
@@ -60,6 +63,7 @@
   },
   "dependencies": {
     "js-uuid": "0.0.6",
+    "moment": "^2.22.2",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
