@@ -1,16 +1,13 @@
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const webpack = require("webpack");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 exports.setFreeVariable = (key, value) => {
   const env = {};
   env[key] = JSON.stringify(value);
   return {
-    plugins: [
-      new webpack.DefinePlugin(env),
-    ],
+    plugins: [new webpack.DefinePlugin(env)]
   };
 };
 
@@ -18,11 +15,11 @@ exports.indexTemplate = function(options) {
   return {
     plugins: [
       new HtmlWebpackPlugin({
-        template: options.htmlTemplate || HtmlWebpackTemplate,
+        template: options.htmlTemplate,
         title: options.title,
         appMountId: options.appMountId,
         mobile: true,
-        inject: 'body'
+        inject: "body"
       })
     ]
   };
@@ -31,13 +28,13 @@ exports.indexTemplate = function(options) {
 exports.devServer = ({ host, port } = {}) => ({
   devServer: {
     historyApiFallback: true,
-    stats: 'errors-only',
+    stats: "errors-only",
     host, // Defaults to `localhost`
     port, // Defaults to 8080
     overlay: {
       errors: true,
-      warnings: true,
-    },
+      warnings: true
+    }
   }
 });
 
@@ -48,7 +45,7 @@ exports.loadJavaScript = ({ include, exclude }) => ({
         test: /\.(js|jsx)$/,
         include,
         exclude,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         options: {
           // Enable caching for improved performance during
           // development.
@@ -59,7 +56,6 @@ exports.loadJavaScript = ({ include, exclude }) => ({
   }
 });
 
-
 exports.lintJavaScript = ({ include, exclude, options }) => ({
   module: {
     rules: [
@@ -67,9 +63,9 @@ exports.lintJavaScript = ({ include, exclude, options }) => ({
         test: /\.(js|jsx)$/,
         include,
         exclude,
-        enforce: 'pre',
-        loader: 'eslint-loader',
-        options,
+        enforce: "pre",
+        loader: "eslint-loader",
+        options
       }
     ]
   }
@@ -82,31 +78,29 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
         test: /\.css$/,
         include,
         exclude,
-        use: ['style-loader', 'css-loader'],
-      },
-    ],
-  },
+        use: ["style-loader", "css-loader"]
+      }
+    ]
+  }
 });
 
-exports.loadSCSS = ({include, exclude} = {}) => ({
+exports.loadSCSS = ({ include, exclude } = {}) => ({
   module: {
     rules: [
       {
         test: /\.scss$/,
         include,
         exclude,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-    ],
-  },
+        use: ["style-loader", "css-loader", "sass-loader"]
+      }
+    ]
+  }
 });
 
-
 exports.extractSCSS = ({ include, exclude } = {}) => {
-
   // Output extracted CSS to a file
   const plugin = new ExtractTextPlugin({
-    filename: '[name].[contenthash:8].css',
+    filename: "[name].[contenthash:8].css",
     allChunks: true
   });
 
@@ -118,13 +112,13 @@ exports.extractSCSS = ({ include, exclude } = {}) => {
           include,
           exclude,
           use: plugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader', 'sass-loader']
-          }),
-        },
-      ],
+            fallback: "style-loader",
+            use: ["css-loader", "sass-loader"]
+          })
+        }
+      ]
     },
-    plugins: [ plugin ],
+    plugins: [plugin]
   };
 };
 
@@ -136,22 +130,22 @@ exports.loadImages = ({ include, exclude, options } = {}) => ({
         include,
         exclude,
         use: {
-          loader: 'url-loader',
-          options,
-        },
-      },
-    ],
-  },
+          loader: "url-loader",
+          options
+        }
+      }
+    ]
+  }
 });
 
 exports.generateSourceMaps = ({ type }) => ({
-  devtool: type,
+  devtool: type
 });
 
-exports.extractBundles = (bundles) => ({
-  plugins: bundles.map((bundle) => (
-    new webpack.optimize.CommonsChunkPlugin(bundle)
-  )),
+exports.extractBundles = bundles => ({
+  plugins: bundles.map(
+    bundle => new webpack.optimize.CommonsChunkPlugin(bundle)
+  )
 });
 
 exports.minify = function() {
@@ -166,8 +160,6 @@ exports.minify = function() {
   };
 };
 
-exports.clean = (path) => ({
-  plugins: [
-    new CleanWebpackPlugin([path]),
-  ]
+exports.clean = path => ({
+  plugins: [new CleanWebpackPlugin([path])]
 });

@@ -13,6 +13,7 @@ const tempColours = [
   "orange",
   "red"
 ];
+
 const tempRange = [-20, 40];
 
 export function initFetchItems(url) {
