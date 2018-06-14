@@ -11,9 +11,10 @@ const Forecast = ({ dayForecast }) =>
         <p className="forecast-desc">{forecast.desc}</p>
         <img src={forecast.icon} alt={forecast.desc} />
         <p className="temperature" style={{ background: forecast.tempColour }}>
-          {forecast.temp} <small>&deg; celsius</small>
+          {forecast.temp}&deg;
         </p>
         <p className="wind-speed">
+          <small>Wind speed</small>
           {forecast.windSpeed} <small>metres per sec</small>
         </p>
       </div>

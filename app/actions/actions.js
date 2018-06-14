@@ -17,8 +17,13 @@ const tempRange = [-20, 40];
 
 export function initFetchItems(url) {
   return dispatch => {
-    dispatch(updateRequestStatus(Modes.pending));
+    dispatch(updateRequestStatus(Modes.PENDING));
     dispatch(fetchItems(url));
+
+    // delay to show loading
+    // let t = setTimeout(() => {
+    //   dispatch(fetchItems(url));
+    // }, 2000);
   };
 }
 
