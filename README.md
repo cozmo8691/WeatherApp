@@ -17,11 +17,12 @@ This will create static html,js,css files inside the 'build' directory.
 
 ## TODO
 
-Refactor components for potential reuse.
-Unit tests on actions.
-Error checking when parsing response.
-Search by location name.
-Nicer icons.
-Weather direction arrow using SVG arc.
-Weather summary for each day.
-Some deprecation warnings have crept into the npm install - would need to update dependencies.
+* Refactor components for potential reuse.
+* Unit tests on actions.
+* Error checking when parsing response.
+* Search by location name.
+* Nicer icons.
+* Weather direction arrow using SVG arc.
+* Weather summary for each day.
+* Some deprecation warnings have crept into the npm install - would need to update dependencies.
+* CSS needs more responsive love and testing.
