@@ -18,7 +18,7 @@ exports.indexTemplate = function(options) {
   return {
     plugins: [
       new HtmlWebpackPlugin({
-        template: options.htmlTemplate || HtmlWebpackTemplate,
+        template: options.htmlTemplate,
         title: options.title,
         appMountId: options.appMountId,
         mobile: true,
